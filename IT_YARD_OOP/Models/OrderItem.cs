@@ -24,11 +24,7 @@ namespace IT_YARD_OOP.Models
 
         public override bool Validate()
         {
-            if ( this.Quantity > 0)
-            {
-                return true;
-            }
-            return false;
+            return (this.Quantity > 0);
         }
     }
 

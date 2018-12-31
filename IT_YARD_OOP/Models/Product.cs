@@ -24,12 +24,11 @@ namespace IT_YARD_OOP.Models
 
         public override bool Validate()
         {
-            var isValid = true;
-            if (string.IsNullOrWhiteSpace(this.Name) || string.IsNullOrWhiteSpace(this.Description) /* || double.*/)
-            {
-                isValid = false;
-            }
-            return isValid;
+            return !(
+                string.IsNullOrWhiteSpace(this.Name) || 
+                string.IsNullOrWhiteSpace(this.Description) || 
+                double.IsNegative(this.Price)
+            );
         }
     }
 }

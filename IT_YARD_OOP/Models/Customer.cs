@@ -11,6 +11,7 @@ namespace IT_YARD_OOP.Models
         : this(string.Empty)
         {
         }
+
         public Customer(string name)
         {
             this.Name = name;
@@ -21,24 +22,26 @@ namespace IT_YARD_OOP.Models
         public static int InstanceCount;
         public string LastName;
         public string EmailAddress;
+
         public new void DisplayEntityInfo()
         {
             Console.WriteLine($"Customer Id - {this.Id}, first name - {this.Name}, last name - {this.LastName}");
         }
         public new bool Validate()
         {
-            var isValid = true;
-            if (string.IsNullOrWhiteSpace(LastName))
-            {
-                isValid = false;
-            }
+            return !(string.IsNullOrWhiteSpace(LastName) || string.IsNullOrWhiteSpace(EmailAddress));
+            //var isValid = true;
+            //if (string.IsNullOrWhiteSpace(LastName))
+            //{
+            //    isValid = false;
+            //}
 
-            if (string.IsNullOrWhiteSpace(EmailAddress))
-            {
-                isValid = false;
-            }
+            //if (string.IsNullOrWhiteSpace(EmailAddress))
+            //{
+            //    isValid = false;
+            //}
 
-            return isValid;
+            //return isValid;
         }
     }
 }

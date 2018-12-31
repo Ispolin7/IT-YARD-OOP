@@ -12,10 +12,12 @@ namespace IT_YARD_OOP.Models
         {
             this.Id = new Guid();
         }
+
         public virtual void DisplayEntityInfo()
         {
             Console.WriteLine("Entity information");
         }
+
         public virtual bool Validate()
         {
             return true;
