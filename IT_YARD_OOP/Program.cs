@@ -1,7 +1,7 @@
 ﻿using System;
-using IT_YARD_OOP.Models;
+using IT_YARD.Models;
 
-namespace IT_YARD_OOP
+namespace IT_YARD
 {
     class Program
     {
