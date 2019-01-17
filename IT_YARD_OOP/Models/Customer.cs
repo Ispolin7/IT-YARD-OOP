@@ -18,10 +18,18 @@ namespace IT_YARD_OOP.Models
             AddressList = new List<Address>();
         }
         public List<Address> AddressList;
-        public int CustomerType;
-        public static int InstanceCount;
-        public string LastName;
-        public string EmailAddress;
+        public int CustomerType { get; set; }
+        public static int InstanceCount { get; set; }
+        public string LastName { get; set; }
+        public string EmailAddress { get; set; }
+
+        public string FullName
+        {
+            get
+            {
+                return this.Name + " " + this.LastName;
+            }
+        }
 
         public new void DisplayEntityInfo()
         {
@@ -30,18 +38,6 @@ namespace IT_YARD_OOP.Models
         public new bool Validate()
         {
             return !(string.IsNullOrWhiteSpace(LastName) || string.IsNullOrWhiteSpace(EmailAddress));
-            //var isValid = true;
-            //if (string.IsNullOrWhiteSpace(LastName))
-            //{
-            //    isValid = false;
-            //}
-
-            //if (string.IsNullOrWhiteSpace(EmailAddress))
-            //{
-            //    isValid = false;
-            //}
-
-            //return isValid;
         }
     }
 }

@@ -5,17 +5,14 @@ using System.Text;
 namespace IT_YARD_OOP.Models
 {
     class Address : EntityBase
-    {
-        //public Address()
-        //{
-        //}       
-        public int AddressType;
-        public string StreetLine1;
-        public string StreetLine2;
-        public string City;
-        public string State;
-        public string PostalCode;
-        public string Country;
+    {      
+        public int AddressType { get; set; }
+        public string StreetLine1 { get; set; }
+        public string StreetLine2 { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string PostalCode { get; set; }
+        public string Country { get; set; }
 
         public new void DisplayEntityInfo()
         {

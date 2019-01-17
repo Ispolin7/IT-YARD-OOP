@@ -687,9 +687,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Ispolin\\source\\repos\\IT_YARD_OOP\\IT_YARD_OOP\\IT_YARD_OOP.csproj",
-      "projectName": "IT_YARD_OOP",
-      "projectPath": "C:\\Users\\Ispolin\\source\\repos\\IT_YARD_OOP\\IT_YARD_OOP\\IT_YARD_OOP.csproj",
+      "projectUniqueName": "C:\\Users\\Ispolin\\source\\repos\\IT_YARD_OOP\\IT_YARD_OOP\\IT_YARD.csproj",
+      "projectName": "IT_YARD",
+      "projectPath": "C:\\Users\\Ispolin\\source\\repos\\IT_YARD_OOP\\IT_YARD_OOP\\IT_YARD.csproj",
       "packagesPath": "C:\\Users\\Ispolin\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\Ispolin\\source\\repos\\IT_YARD_OOP\\IT_YARD_OOP\\obj\\",
       "projectStyle": "PackageReference",
