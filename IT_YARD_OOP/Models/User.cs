@@ -3,34 +3,58 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IT_YARD.Common;
 
-namespace IT_YARD_OOP
+namespace IT_YARD.Models
 {
-    public class User
+    /// <summary>
+    /// Users model
+    /// </summary>
+    class User : EntityBase
     {
-        public Guid _id;
-        public string _username;
-        public string _password { get; set; }
+        /// <summary>
+        /// Class properties
+        /// </summary>
+        public string Username { get; }
+        public string Password { get; }
 
-        public User()
+        /// <summary>
+        /// Class constructor
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        public User(string username, string password) 
         {
-            this._id = Guid.NewGuid();
+            this.Username = username;
+            this.Password = Cryptographer.Encrypt(password);
         }
 
-        public User(string username, string password) : this()
+        /// <summary>
+        /// Show User information
+        /// </summary>
+        public new void DisplayEntityInfo()
         {
-            this._username = username;
-            this._password = Cryptographer.Encrypt(password);
+            Console.WriteLine($"Username - {this.Username} and password - {this.Password}");
         }
 
-        public void DisplayInfo()
-        {
-            Console.WriteLine($"Username - {this._username} and password - {this._password}");
-        }
-
+        /// <summary>
+        /// Decrypte user password and show it
+        /// </summary>
         public void DisplayPassword()
         {
-            Console.WriteLine($"Password {this._username} - {Cryptographer.Decrypt(this._password)}");
+            Console.WriteLine($"Password {this.Username} - {Cryptographer.Decrypt(this.Password)}");
+        }
+
+        /// <summary>
+        /// Validation user properties
+        /// </summary>
+        /// <returns>true if everything is correct</returns>
+        public new bool Validate()
+        {
+            return !(
+                string.IsNullOrWhiteSpace(this.Username) &&
+                string.IsNullOrWhiteSpace(Cryptographer.Decrypt(this.Password))
+            );
         }
     }
 }

@@ -2,23 +2,27 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace IT_YARD_OOP.Models
+namespace IT_YARD.Models
 {
+    /// <summary>
+    /// Base mosels class
+    /// </summary>
     class EntityBase
-    {
-        public Guid Id { get; }
+    {        
 
-        public EntityBase()
-        {
-            this.Id = new Guid();
-        }
-
-        public virtual void DisplayEntityInfo()
+        /// <summary>
+        /// Show entity information
+        /// </summary>
+        public void DisplayEntityInfo()
         {
             Console.WriteLine("Entity information");
         }
 
-        public virtual bool Validate()
+        /// <summary>
+        /// Validate entity
+        /// </summary>
+        /// <returns>true if validation success</returns>
+        public bool Validate()
         {
             return true;
         }

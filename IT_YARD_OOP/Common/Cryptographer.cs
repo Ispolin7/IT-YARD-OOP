@@ -6,13 +6,22 @@ using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.IO;
 
-namespace IT_YARD_SERVICE
+namespace IT_YARD.Common
 {
+    /// <summary>
+    /// Encrypt/Decrypt information
+    /// </summary>
     static class Cryptographer
     {
+        /// <summary>
+        /// Class fields
+        /// </summary>
         static byte[] key;
         static byte[] iv;
 
+        /// <summary>
+        /// Cryptographer static constructor
+        /// </summary>
         static Cryptographer()
         {
             using (RijndaelManaged myRijndael = new RijndaelManaged())
@@ -24,6 +33,11 @@ namespace IT_YARD_SERVICE
             }
         }
 
+        /// <summary>
+        /// Encrypt information
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns>encrypt string</returns>
         public static string Encrypt(string text)
         {
             byte[] encrypted;
@@ -47,6 +61,11 @@ namespace IT_YARD_SERVICE
             return Convert.ToBase64String(encrypted);
         }
 
+        /// <summary>
+        /// Decrypt information
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns>decrypt string</returns>
         public static string Decrypt(string text)
         {
             byte[] cipherText = Convert.FromBase64String(text);
