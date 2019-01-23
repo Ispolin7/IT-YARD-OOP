@@ -13,7 +13,8 @@ namespace IT_YARD.Repositories
     /// </summary>
     class Repository<T> where T:EntityBase
     {
-        private Logger logger = new Logger();
+        //private Logger logger = new Logger();
+        private FileLogger logger = new FileLogger();
         public static Dictionary<int, T> items = new Dictionary<int, T>();
 
         private int increment = 1;

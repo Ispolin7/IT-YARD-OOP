@@ -1,0 +1,47 @@
+﻿23.01.2019 12:33:26 Type Info. Message: Add User with id - 1 to repository
+23.01.2019 12:33:26 Type Info. Message: Add User with id - 2 to repository
+23.01.2019 12:33:26 Type Info. Message: Add Customer with id - 1 to repository
+23.01.2019 12:33:26 Type Info. Message: Add Product with id - 1 to repository
+23.01.2019 12:33:26 Type Info. Message: Add Product with id - 2 to repository
+23.01.2019 12:33:26 Type Info. Message: Add OrderItem with id - 1 to repository
+23.01.2019 12:33:26 Type Info. Message: Add OrderItem with id - 2 to repository
+23.01.2019 12:33:26 Type Info. Message: Add Order with id - 1 to repository
+23.01.2019 12:33:26 Type Info. Message: Add Order with id - 2 to repository
+23.01.2019 12:33:26 Type Info. Message: Delete Order with id - 1
+23.01.2019 12:34:17 Type Info. Message: Add User with id - 1 to repository
+23.01.2019 12:34:17 Type Info. Message: Add User with id - 2 to repository
+23.01.2019 12:34:17 Type Info. Message: Add Customer with id - 1 to repository
+23.01.2019 12:34:17 Type Info. Message: Add Product with id - 1 to repository
+23.01.2019 12:34:17 Type Info. Message: Add Product with id - 2 to repository
+23.01.2019 12:34:17 Type Info. Message: Add OrderItem with id - 1 to repository
+23.01.2019 12:34:17 Type Info. Message: Add OrderItem with id - 2 to repository
+23.01.2019 12:34:17 Type Info. Message: Add Order with id - 1 to repository
+23.01.2019 12:34:17 Type Info. Message: Add Order with id - 2 to repository
+23.01.2019 12:34:17 Type Info. Message: Delete Order with id - 1
+23.01.2019 12:39:52 Type Info. Message: Add User with id - 1 to repository
+23.01.2019 12:39:52 Type Info. Message: Add User with id - 2 to repository
+23.01.2019 12:39:52 Type Info. Message: Add Customer with id - 1 to repository
+23.01.2019 12:39:52 Type Info. Message: Add Product with id - 1 to repository
+23.01.2019 12:39:52 Type Info. Message: Add Product with id - 2 to repository
+23.01.2019 12:39:52 Type Info. Message: Add OrderItem with id - 1 to repository
+23.01.2019 12:39:52 Type Info. Message: Add OrderItem with id - 2 to repository
+23.01.2019 12:39:52 Type Info. Message: Add Order with id - 1 to repository
+23.01.2019 12:39:52 Type Info. Message: Add Order with id - 2 to repository
+23.01.2019 12:39:52 Type Info. Message: Delete Order with id - 1
+23.01.2019 12:40:52 Type Info. Message: Add User with id - 1 to repository
+23.01.2019 12:40:52 Type Info. Message: Add User with id - 2 to repository
+23.01.2019 12:40:52 Type Info. Message: Add Customer with id - 1 to repository
+23.01.2019 12:40:52 Type Info. Message: Add Product with id - 1 to repository
+23.01.2019 12:40:52 Type Info. Message: Add Product with id - 2 to repository
+23.01.2019 12:40:52 Type Info. Message: Add OrderItem with id - 1 to repository
+23.01.2019 12:40:52 Type Info. Message: Add OrderItem with id - 2 to repository
+23.01.2019 12:42:53 Type Info. Message: Add User with id - 1 to repository
+23.01.2019 12:42:53 Type Info. Message: Add User with id - 2 to repository
+23.01.2019 12:42:53 Type Info. Message: Add Customer with id - 1 to repository
+23.01.2019 12:42:53 Type Info. Message: Add Product with id - 1 to repository
+23.01.2019 12:42:53 Type Info. Message: Add Product with id - 2 to repository
+23.01.2019 12:42:53 Type Info. Message: Add OrderItem with id - 1 to repository
+23.01.2019 12:42:53 Type Info. Message: Add OrderItem with id - 2 to repository
+23.01.2019 12:42:53 Type Info. Message: Add Order with id - 1 to repository
+23.01.2019 12:42:53 Type Info. Message: Add Order with id - 2 to repository
+23.01.2019 12:42:53 Type Info. Message: Delete Order with id - 1
