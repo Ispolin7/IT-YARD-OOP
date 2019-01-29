@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Reflection;
 using System.Threading.Tasks;
 using IT_YARD.Common;
 
@@ -12,6 +13,7 @@ namespace IT_YARD.Models
     /// </summary>
     class User : EntityBase
     {
+        public static string ClassName = MethodBase.GetCurrentMethod().DeclaringType.ToString();
         /// <summary>
         /// Class properties
         /// </summary>
@@ -23,7 +25,7 @@ namespace IT_YARD.Models
         /// </summary>
         /// <param name="username"></param>
         /// <param name="password"></param>
-        public User(string username, string password) 
+        public User(string username, string password) : base()
         {
             this.Username = username;
             this.Password = Cryptographer.Encrypt(password);
@@ -49,7 +51,7 @@ namespace IT_YARD.Models
         /// Validation user properties
         /// </summary>
         /// <returns>true if everything is correct</returns>
-        public new bool Validate()
+        public override bool Validate()
         {
             return !(
                 string.IsNullOrWhiteSpace(this.Username) &&

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Reflection;
 
 namespace IT_YARD.Models
 {
@@ -9,32 +10,13 @@ namespace IT_YARD.Models
     /// </summary>
     class Order : EntityBase
     {
+        public static string ClassName = MethodBase.GetCurrentMethod().DeclaringType.ToString();
         /// <summary>
         /// Class properties
         /// </summary>
-        public int CustomerId { get; }    
-        public Address ShippingAddress
-        {
-            get
-            {
-                return ShippingAddress;
-            }
-            set
-            {
-                // validate Address instance
-                // TODO Stack Owerflow Exception!!!
-                //if (value.Validate())
-                //{
-                //    ShippingAddress = value;
-                //}
-                //else
-                //{
-                //    ShippingAddress = null;
-                //}
-            }
-        }
-
-        public List<int> OrderItemsId { get; }
+        public Guid CustomerId { get; }    
+        public Address ShippingAddress { get; }
+        public List<Guid> OrderItemsId { get; }
         public DateTime OrderDate { get; }
 
         /// <summary>
@@ -43,12 +25,11 @@ namespace IT_YARD.Models
         /// <param name="customer"></param>
         /// <param name="address"></param>
         /// <param name="items"></param>
-        public Order(int customerId, Address address, List<int> items) 
+        public Order(Guid customerId, Address address) : base()
         {
             this.CustomerId = customerId;
             this.OrderDate = DateTime.UtcNow;
             this.ShippingAddress = address;
-            this.OrderItemsId = items;
         }
 
         /// <summary>
@@ -67,13 +48,9 @@ namespace IT_YARD.Models
         /// Validate order properties
         /// </summary>
         /// <returns>true if everything is correct</returns>
-        public new bool Validate()
+        public override bool Validate()
         {
-            return !(
-                this.CustomerId <= 0 &&
-                this.ShippingAddress == null &&
-                OrderItemsId.Count == 0
-                );
+            return (ShippingAddress.Validate());
         }
     }
 }

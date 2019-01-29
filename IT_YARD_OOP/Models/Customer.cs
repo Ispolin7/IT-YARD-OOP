@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
+using System.Reflection;
 using IT_YARD.Repositories;
+using System.Collections.Generic;
 
 namespace IT_YARD.Models
 {
@@ -15,6 +16,7 @@ namespace IT_YARD.Models
             retail,
             wholesale
         }
+        public static string ClassName = MethodBase.GetCurrentMethod().DeclaringType.ToString();
 
         /// <summary>
         /// Customer properties
@@ -46,7 +48,7 @@ namespace IT_YARD.Models
         /// <summary>
         /// Customer address list
         /// </summary>
-        public List<Address> AddressList = new List<Address>();
+        public List<Guid> AddressList = new List<Guid>();
 
         /// <summary>
         /// Я хз что это)))) !!!!!!!!!!!!!!
@@ -72,13 +74,13 @@ namespace IT_YARD.Models
         /// <param name="email"></param>
         /// <param name="type"></param>
         /// <param name="id"></param>
-        public Customer(string name, string lastName, string email, int type, int id)
+        public Customer(string name, string lastName, string email, int type, int id) : base()
         {
             this.Name = name;
             this.LastName = lastName;
             this.EmailAddress = email;
             //TODO Stack Owerflow Exception!!!!!!!!!!!!!!!
-            //this.CustomerType = type;
+            this.CustomerType = type;
             this.UserId = id;
         }
 
@@ -94,7 +96,7 @@ namespace IT_YARD.Models
         /// Validate customer properties
         /// </summary>
         /// <returns></returns>
-        public new bool Validate()
+        public override bool Validate()
         {
             return !(
                 string.IsNullOrWhiteSpace(Name) &&
@@ -112,7 +114,7 @@ namespace IT_YARD.Models
         {
             if(newAddress.Validate())
             {
-                AddressList.Add(newAddress);
+                AddressList.Add(newAddress.Id);
                 return true;
             }
             return false;           

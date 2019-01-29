@@ -1,24 +1,34 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
+using System.Reflection;
+using System.Runtime.Serialization;
 
 namespace IT_YARD.Models
 {
     /// <summary>
     /// Delivery address model
     /// </summary>
+    [DataContract]
     class Address : EntityBase
-    {   
+    {
+        public static string ClassName = MethodBase.GetCurrentMethod().DeclaringType.ToString();
         /// <summary>
         /// Class properties
         /// </summary>
-        public int AddressType { get; }
-        public string StreetLine1 { get; }
-        public string StreetLine2 { get; }
-        public string City { get; }
-        public string State { get; }
-        public string PostalCode { get; }
-        public string Country { get; }
+        [DataMember]
+        public int AddressType { get; set; }
+        [DataMember]
+        public string StreetLine1 { get; set; }
+        [DataMember]
+        public string StreetLine2 { get; set; }
+        [DataMember]
+        public string City { get; set; }
+        [DataMember]
+        public string State { get; set; }
+        [DataMember]
+        public string PostalCode { get; set; }
+        [DataMember]
+        public string Country { get; set; }
 
         /// <summary>
         /// Address constructor
@@ -30,7 +40,7 @@ namespace IT_YARD.Models
         /// <param name="state"></param>
         /// <param name="code"></param>
         /// <param name="country"></param>
-        public Address(int type, string street1, string street2, string city, string state, string code, string country)
+        public Address(int type, string street1, string street2, string city, string state, string code, string country) : base()
         {
             this.AddressType = type;
             this.StreetLine1 = street1;
@@ -39,7 +49,7 @@ namespace IT_YARD.Models
             this.State = state;
             this.PostalCode = code;
             this.Country = country;
-        }
+        }      
 
         /// <summary>
         /// Display address information
@@ -53,18 +63,13 @@ namespace IT_YARD.Models
         /// Validate Address properties
         /// </summary>
         /// <returns>true if everything is correct</returns>
-        public new bool Validate()
-        {
-            return !(
-                //this.AddressType < 0 &&
-                //string.IsNullOrWhiteSpace(this.StreetLine1) &&
-                //string.IsNullOrWhiteSpace(this.StreetLine2) &&
-                //string.IsNullOrWhiteSpace(this.City) &&
-                //string.IsNullOrWhiteSpace(this.State) &&
-                //string.IsNullOrWhiteSpace(this.PostalCode) &&
-                //string.IsNullOrWhiteSpace(this.Country)
-                false
-            );
+        public override bool Validate()
+        {           
+            if(PostalCode == null)
+            {
+                return false;
+            }            
+            return true;
         }
     }
 }

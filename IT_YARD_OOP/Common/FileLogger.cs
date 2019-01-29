@@ -48,7 +48,9 @@ namespace IT_YARD.Common
         public string GetFilePath()
         {
             string path = Assembly.GetExecutingAssembly().Location;
-            return path.Replace(@"bin\Debug\netcoreapp2.1\IT_YARD.dll", @"Common\log.txt");
+            return path.Replace(@"bin\Debug\netcoreapp2.1\IT_YARD.dll", @"ApplicationData\log.txt");
+            // System.IO.Path.GetFullPath(@"..\..\")
+            // Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
         }
     }
 }

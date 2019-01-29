@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Reflection;
 
 namespace IT_YARD.Models
 {
@@ -9,6 +10,7 @@ namespace IT_YARD.Models
     /// </summary>
     class Product : EntityBase
     {
+        public static string ClassName = MethodBase.GetCurrentMethod().DeclaringType.ToString();
         public string Name { get; }
         public string Description { get; }
         public double Price { get; }
@@ -19,7 +21,7 @@ namespace IT_YARD.Models
         /// <param name="name"></param>
         /// <param name="description"></param>
         /// <param name="price"></param>
-        public Product(string name, string description, double price) 
+        public Product(string name, string description, double price) : base()
         {
             this.Name = name;
             this.Description = description;
@@ -38,7 +40,7 @@ namespace IT_YARD.Models
         /// Validate product properties
         /// </summary>
         /// <returns>true if everything is correct</returns>
-        public new bool Validate()
+        public override bool Validate()
         {
             return !(
                 string.IsNullOrWhiteSpace(this.Name) &&

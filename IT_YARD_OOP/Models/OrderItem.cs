@@ -2,16 +2,19 @@
 using System.Collections.Generic;
 using System.Text;
 using IT_YARD.Repositories;
+using System.Reflection;
 
 
 namespace IT_YARD.Models
 {
     class OrderItem : EntityBase
     {
+        public static string ClassName = MethodBase.GetCurrentMethod().DeclaringType.ToString();
         /// <summary>
         /// OrderItem properties
         /// </summary>
-        public int ProductId { get; }
+        public Guid ProductId { get; }
+        public Guid OrderId { get; }
         public int Quantity { get; }
         public double PurchasePrice { get; }
 
@@ -21,11 +24,12 @@ namespace IT_YARD.Models
         /// <param name="id"></param>
         /// <param name="product"></param>
         /// <param name="quantity"></param>
-        public OrderItem(int id, Product product, int quantity) 
+        public OrderItem(Product product, int quantity, Guid orderId) : base() 
         {   
             if(product != null)
             {
-                this.ProductId = id;
+                this.ProductId = product.Id;
+                this.OrderId = orderId;
                 this.Quantity = quantity;
                 this.PurchasePrice = quantity * product.Price;
             }                 
@@ -43,9 +47,9 @@ namespace IT_YARD.Models
         /// Validate OrderItem properties
         /// </summary>
         /// <returns>true if everything is correct</returns>
-        public new bool Validate()
+        public override bool Validate()
         {
-            return (this.Quantity > 0);
+            return (this.PurchasePrice > 0);
         }
     }
 
