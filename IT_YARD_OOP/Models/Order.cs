@@ -1,23 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Reflection;
+using System.Runtime.Serialization;
 
 namespace IT_YARD.Models
 {
     /// <summary>
     /// Product order
     /// </summary>
+    [DataContract]
     class Order : EntityBase
     {
-        public static string ClassName = MethodBase.GetCurrentMethod().DeclaringType.ToString();
         /// <summary>
         /// Class properties
         /// </summary>
-        public Guid CustomerId { get; }    
-        public Address ShippingAddress { get; }
-        public List<Guid> OrderItemsId { get; }
-        public DateTime OrderDate { get; }
+        [DataMember]
+        public Guid CustomerId { get; set; }
+        [DataMember]
+        public Address ShippingAddress { get; set; }
+        [DataMember]
+        public List<Guid> OrderItemsId { get; set; }
+        [DataMember]
+        public DateTime OrderDate { get; set; }
 
         /// <summary>
         /// Order constructor

@@ -1,29 +1,32 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.IO;
-using System.Linq;
 using IT_YARD.Common;
 using IT_YARD.Models;
+using System.Collections.Generic;
 using System.Runtime.Serialization.Json;
-using System.Runtime.Serialization;
 
 namespace IT_YARD.Repositories
 {
-    class JsonRepositoryGeneric<T> where T : EntityBase
+    class JsonRepositoryGeneric<T> /*: IRepository<T>*/ where T : EntityBase
     {
-        //private Logger logger = new Logger();
-        private FileLogger logger = new FileLogger();
-        //public static Dictionary<int, T> items = new Dictionary<int, T>();
-        DataContractJsonSerializer serializer;
-        public List<T> list;
-        private string file;
+        //private Logger Log = new Logger();
+        private FileLogger Log { get; }
+        private DataContractJsonSerializer Serializer { get; }
+        private List<T> EntityList { get; set; }
+        //private List<T> EmptyList { get; }
+        private string FilePath { get; }
 
+        /// <summary>
+        /// Repository constructor
+        /// </summary>
         public JsonRepositoryGeneric()
         {
-            this.list = new List<T>();
-            this.serializer = new DataContractJsonSerializer(typeof(List<T>));
-            this.file = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent + "\\ApplicationData\\" + typeof(T) + ".json";
+            this.Log = new FileLogger();
+            this.EntityList = new List<T>();
+            //this.EmptyList = new List<T>();
+            this.Serializer = new DataContractJsonSerializer(typeof(List<T>));
+            this.FilePath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent + "\\ApplicationData\\" + typeof(T) + ".json";
+            //File.Create(this.FilePath);
         }
         /// <summary>
         /// Convert repository to array and return it
@@ -31,10 +34,7 @@ namespace IT_YARD.Repositories
         /// <returns>Array of all values</returns>
         public List<T> All()
         {
-            using (FileStream stream = new FileStream(this.file, FileMode.OpenOrCreate))
-            {
-                return (List<T>)serializer.ReadObject(stream);
-            }
+            return ReadJson();
         }
 
         /// <summary>
@@ -46,20 +46,18 @@ namespace IT_YARD.Repositories
         {
             if (item.Validate())
             {
-                using (FileStream stream = new FileStream(this.file, FileMode.Create))
+                EntityList = ReadJson();
+                if (EntityList == null)
                 {
-                    if(stream.Length != 0)
-                    {
-                        list = (List<T>)serializer.ReadObject(stream);
-                    }
-                    
-                    list.Add(item);
-                    serializer.WriteObject(stream, list);
+                    EntityList = new List<T>();
                 }
-                this.logger.LogInfo($"Add {typeof(T).Name} with id - {item.Id} to repository");
+                EntityList.Add(item);
+                UpdateJson(EntityList);
+                this.Log.LogInfo($"Add {typeof(T).Name} with id - {item.Id} to repository");
                 return true;
+                                
             }
-            this.logger.LogError($"Item not added, validation error");
+            this.Log.LogError($"{typeof(T).Name} not added, validation error");
             return false;
         }
 
@@ -71,15 +69,21 @@ namespace IT_YARD.Repositories
         public T GetById(Guid id)
         {
             T currentItem = null;
-            List<T> items = this.All();
-            foreach(T element in items)
+            EntityList = ReadJson();
+
+            if (EntityList == null)
+            {
+                return currentItem;
+            }
+
+            foreach (T element in EntityList)
             {
                 if (element.Id == id)
                 {
                     currentItem = element;
                     break;
                 }
-            }
+            }                        
             return currentItem;
         }
 
@@ -90,40 +94,24 @@ namespace IT_YARD.Repositories
         /// <returns>true if element delete from repository</returns>
         public bool Delete(Guid id)
         {
-            //T currentItem = this.GetById(id);
-            using (FileStream stream = new FileStream(this.file, FileMode.OpenOrCreate))
+            EntityList = ReadJson();
+            if (EntityList == null)
             {
-                list = (List<T>)serializer.ReadObject(stream);
-                foreach (T element in list)
+                this.Log.LogError($"Could not delete {typeof(T).Name} with id - {id}. Not found");
+                return false;
+            }
+            foreach (T element in EntityList)
+            {
+                if (element.Id == id)
                 {
-                    if (element.Id == id)
-                    {                      
-                        list.Remove(element);
-                        serializer.WriteObject(stream, list);
-                        this.logger.LogInfo($"Delete {typeof(T).Name} with id - {id}");
-                        return true;
-                    }
+                    EntityList.Remove(element);
+                    break;
                 }
             }
-            
-            this.logger.LogError($"Could not delete {typeof(T).Name} with id - {id}. Not found");
-            return false;
-
+            UpdateJson(EntityList);
+            this.Log.LogInfo($"Delete {typeof(T).Name} with id - {id}");
+            return true;
         }
-
-        /// <summary>
-        /// Display Entity information by id
-        /// </summary>
-        /// <param name="id"></param>
-        //public void DisplayItemInfo(int id)
-        //{
-        //    T item = this.GetById(id);
-        //    if (item != null)
-        //    {
-        //        Console.Write($"ID - {id}. ");
-        //        item.DisplayEntityInfo();
-        //    }
-        //}
 
         /// <summary>
         /// Update item in repository
@@ -133,23 +121,53 @@ namespace IT_YARD.Repositories
         /// <returns>true if element update</returns>
         public bool Update(T item)
         {
-            using (FileStream stream = new FileStream(this.file, FileMode.OpenOrCreate))
+            EntityList = ReadJson();
+            if (EntityList == null)
             {
-                list = (List<T>)serializer.ReadObject(stream);
-                foreach (T element in list)
+                return false;
+            }
+            foreach (T element in EntityList)
+            {
+                if (element.Id == item.Id)
                 {
-                    if (element.Id == item.Id)
-                    {
-                        list.Remove(element);
-                        list.Add(item);
-                        serializer.WriteObject(stream, list);
-                        this.logger.LogInfo($"Update {typeof(T).Name} with id - {item.Id}");
-                        return true;
-                    }
+                    EntityList.Remove(element);
+                    EntityList.Add(item);
+                    break;
                 }
-            }           
-            this.logger.LogError($"Could not delete {typeof(T).Name} with id - {item.Id}. Not found");
-            return false;
+            }
+            UpdateJson(EntityList);
+            this.Log.LogInfo($"Update {typeof(T).Name} with id - {item.Id}");
+            return true;
+        }
+
+        /// <summary>
+        /// Deserialize information from json file to list
+        /// </summary>
+        /// <returns>entity list or null</returns>
+        public List<T> ReadJson()
+        {           
+            using (FileStream stream = new FileStream(this.FilePath, FileMode.OpenOrCreate))
+            {
+                if (stream.Length != 0)
+                {
+                    return (List<T>)Serializer.ReadObject(stream);                        
+                }
+            }                          
+            return null;
+        }
+
+        /// <summary>
+        /// Serealize information from list to json file
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns>true if file update</returns>
+        public bool UpdateJson(List<T> list)
+        {
+            using (FileStream stream = new FileStream(this.FilePath, FileMode.Truncate))
+            {
+                Serializer.WriteObject(stream, list);
+                return true;
+            }
         }
     }
 }

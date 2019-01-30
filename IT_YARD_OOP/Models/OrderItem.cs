@@ -1,22 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using IT_YARD.Repositories;
 using System.Reflection;
+using System.Runtime.Serialization;
 
 
 namespace IT_YARD.Models
 {
+    [DataContract]
     class OrderItem : EntityBase
     {
         public static string ClassName = MethodBase.GetCurrentMethod().DeclaringType.ToString();
         /// <summary>
         /// OrderItem properties
         /// </summary>
-        public Guid ProductId { get; }
-        public Guid OrderId { get; }
-        public int Quantity { get; }
-        public double PurchasePrice { get; }
+        [DataMember]
+        public Guid ProductId { get; set; }
+        [DataMember]
+        public Guid OrderId { get; set; }
+        [DataMember]
+        public int Quantity { get; set; }
+        [DataMember]
+        public double PurchasePrice { get; set; }
 
         /// <summary>
         /// OrderItem constructor
@@ -25,14 +28,11 @@ namespace IT_YARD.Models
         /// <param name="product"></param>
         /// <param name="quantity"></param>
         public OrderItem(Product product, int quantity, Guid orderId) : base() 
-        {   
-            if(product != null)
-            {
-                this.ProductId = product.Id;
-                this.OrderId = orderId;
-                this.Quantity = quantity;
-                this.PurchasePrice = quantity * product.Price;
-            }                 
+        {             
+            this.ProductId = product.Id;
+            this.OrderId = orderId;
+            this.Quantity = quantity;
+            this.PurchasePrice = quantity * product.Price;                          
         }
 
         /// <summary>

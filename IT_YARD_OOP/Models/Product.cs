@@ -1,19 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Reflection;
+using System.Runtime.Serialization;
 
 namespace IT_YARD.Models
 {
     /// <summary>
     /// Product Model
     /// </summary>
+    [DataContract]
     class Product : EntityBase
     {
-        public static string ClassName = MethodBase.GetCurrentMethod().DeclaringType.ToString();
-        public string Name { get; }
-        public string Description { get; }
-        public double Price { get; }
+        [DataMember]
+        public string Name { get; set; }
+        [DataMember]
+        public string Description { get; set; }
+        [DataMember]
+        public double Price { get; set; }
 
         /// <summary>
         /// Product constructor

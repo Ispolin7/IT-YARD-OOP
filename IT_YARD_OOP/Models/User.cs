@@ -1,24 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Reflection;
-using System.Threading.Tasks;
 using IT_YARD.Common;
+using System.Runtime.Serialization;
 
 namespace IT_YARD.Models
 {
     /// <summary>
     /// Users model
     /// </summary>
+    [DataContract]
     class User : EntityBase
     {
-        public static string ClassName = MethodBase.GetCurrentMethod().DeclaringType.ToString();
         /// <summary>
         /// Class properties
         /// </summary>
-        public string Username { get; }
-        public string Password { get; }
+        [DataMember]
+        public string Username { get; set; }
+        [DataMember]
+        public string Password { get; set; }
 
         /// <summary>
         /// Class constructor

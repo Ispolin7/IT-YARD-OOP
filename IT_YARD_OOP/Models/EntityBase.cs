@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Text;
-using System.Reflection;
-using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace IT_YARD.Models
@@ -38,10 +35,5 @@ namespace IT_YARD.Models
         {
             this.Id = Guid.NewGuid();
         }
-
-        //public static string GetClassName()
-        //{
-        //    return MethodBase.GetCurrentMethod().DeclaringType.ToString();
-        //}
     }
 }

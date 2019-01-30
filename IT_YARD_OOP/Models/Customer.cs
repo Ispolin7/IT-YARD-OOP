@@ -1,53 +1,59 @@
 ﻿using System;
-using System.Text;
-using System.Reflection;
-using IT_YARD.Repositories;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace IT_YARD.Models
 {
+    [DataContract]
     class Customer : EntityBase
     {
         /// <summary>
         /// Customer Types List
         /// </summary>
-        public enum CustomerTypes 
+        public enum CustomersTypes
         {
             retail,
             wholesale
         }
-        public static string ClassName = MethodBase.GetCurrentMethod().DeclaringType.ToString();
 
         /// <summary>
         /// Customer properties
         /// </summary>
-        public string Name { get; }
-        public string LastName { get; }
-        public string EmailAddress { get; }
-        public int UserId { get; }
-        public int CustomerType
-        {
-            get
-            {
-                return CustomerType;
-            }
-            set
-            {
-                if(Enum.IsDefined(typeof(CustomerTypes), value))
-                {
-                    CustomerType = value;
-                }
-                // default type
-                else
-                {
-                    CustomerType = 0;
-                }
-            }
-        }
+        [DataMember]
+        public string Name { get; set; }
+        [DataMember]
+        public string LastName { get; set; }
+        [DataMember]
+        public string EmailAddress { get; set; }
+        [DataMember]
+        public int UserId { get; set; }
+        [DataMember]
+        public int CustomerType { get; set; }
+        // TODO Stack!
+        //{ 
+        //    get
+        //    {
+        //        return CustomerType;
+        //    }
+        //    set
+        //    {
+        //        if (Enum.IsDefined(typeof(CustomersTypes), value))
+        //        {
+        //            Console.WriteLine("Debug");
+        //            CustomerType = value;
+        //        }
+        //        // default type
+        //        else
+        //        {
+        //            CustomerType = 0;
+        //        }
+        //    }
+        //}
 
         /// <summary>
         /// Customer address list
         /// </summary>
+        [DataMember]
         public List<Guid> AddressList = new List<Guid>();
 
         /// <summary>
@@ -89,7 +95,7 @@ namespace IT_YARD.Models
         /// </summary>
         public new void DisplayEntityInfo()
         {
-            Console.WriteLine($"Full name - {this.FullName},  type - {(CustomerTypes)this.CustomerType}");
+            Console.WriteLine($"Full name - {this.FullName},  type - {/*(CustomersTypes)*/this.CustomerType}");
         }
 
         /// <summary>
@@ -99,8 +105,8 @@ namespace IT_YARD.Models
         public override bool Validate()
         {
             return !(
-                string.IsNullOrWhiteSpace(Name) &&
-                string.IsNullOrWhiteSpace(LastName) && 
+                string.IsNullOrWhiteSpace(Name) ||
+                string.IsNullOrWhiteSpace(LastName) ||
                 string.IsNullOrWhiteSpace(EmailAddress)
                 );
         }

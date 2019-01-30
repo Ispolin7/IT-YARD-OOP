@@ -11,7 +11,6 @@ namespace IT_YARD.Models
     [DataContract]
     class Address : EntityBase
     {
-        public static string ClassName = MethodBase.GetCurrentMethod().DeclaringType.ToString();
         /// <summary>
         /// Class properties
         /// </summary>
@@ -64,12 +63,8 @@ namespace IT_YARD.Models
         /// </summary>
         /// <returns>true if everything is correct</returns>
         public override bool Validate()
-        {           
-            if(PostalCode == null)
-            {
-                return false;
-            }            
-            return true;
+        {
+            return true/*!string.IsNullOrWhiteSpace(this.PostalCode)*/;
         }
     }
 }

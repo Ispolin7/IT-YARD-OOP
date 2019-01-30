@@ -10,7 +10,6 @@ namespace IT_YARD.Repositories
         bool Insert(T item);
         T GetById(int id);
         bool Delete(int id);
-        void DisplayItemInfo(int id);
         bool Update(int id, T item);        
     }
 }
