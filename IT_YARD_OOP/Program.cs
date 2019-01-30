@@ -65,6 +65,23 @@ namespace IT_YARD
             customerRepo.Delete(thirdCustomer.Id);
             customerRepo.Delete(fourthCustomer.Id);
 
+            var allCustomers = customerRepo.All();
+            var allOrders = orderRepository.All();
+            foreach(var customer in allCustomers)
+            {
+                customer.DisplayEntityInfo();
+                Console.WriteLine("Orders:");
+                foreach(var order in allOrders)
+                {
+                    if (order.CustomerId == customer.Id)
+                    {                       
+                        order.DisplayEntityInfo();
+                        Console.WriteLine(string.Empty);
+                    }
+                }
+                Console.WriteLine(new string('=',30));
+            }
+
             Console.ReadLine();
         }
     }

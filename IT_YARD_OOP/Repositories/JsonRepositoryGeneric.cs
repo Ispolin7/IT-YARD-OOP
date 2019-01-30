@@ -26,7 +26,10 @@ namespace IT_YARD.Repositories
             //this.EmptyList = new List<T>();
             this.Serializer = new DataContractJsonSerializer(typeof(List<T>));
             this.FilePath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent + "\\ApplicationData\\" + typeof(T) + ".json";
-            //File.Create(this.FilePath);
+            if(File.Exists(this.FilePath))
+            {
+                File.Delete(this.FilePath);
+            }
         }
         /// <summary>
         /// Convert repository to array and return it
