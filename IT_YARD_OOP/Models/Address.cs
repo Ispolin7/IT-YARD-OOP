@@ -64,7 +64,7 @@ namespace IT_YARD.Models
         /// <returns>true if everything is correct</returns>
         public override bool Validate()
         {
-            return true/*!string.IsNullOrWhiteSpace(this.PostalCode)*/;
+            return !string.IsNullOrWhiteSpace(this.PostalCode);
         }
     }
 }

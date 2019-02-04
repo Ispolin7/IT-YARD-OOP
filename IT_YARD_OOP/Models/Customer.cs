@@ -1,4 +1,5 @@
 ﻿using System;
+using IT_YARD.Common;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
@@ -73,6 +74,16 @@ namespace IT_YARD.Models
         }
 
         /// <summary>
+        /// list for related products
+        /// </summary>
+        public List<Order> Orders { get; set;}
+
+        /// <summary>
+        /// Helper for serialize/deserialize
+        /// </summary>
+        public static JsonSerializer<Order> relatedOrders = new JsonSerializer<Order>();
+
+        /// <summary>
         /// Customer constructor
         /// </summary>
         /// <param name="name"></param>
@@ -85,9 +96,9 @@ namespace IT_YARD.Models
             this.Name = name;
             this.LastName = lastName;
             this.EmailAddress = email;
-            //TODO Stack Owerflow Exception!!!!!!!!!!!!!!!
             this.CustomerType = type;
             this.UserId = id;
+            //this.Orders = new List<Order>();
         }
 
         /// <summary>
@@ -124,6 +135,25 @@ namespace IT_YARD.Models
                 return true;
             }
             return false;           
+        }
+
+        /// <summary>
+        /// Get related products list
+        /// </summary>
+        /// <returns>update Products property</returns>
+        public override bool AppendRelated()
+        {
+
+            this.Orders = new List<Order>();
+            foreach (Order order in relatedOrders.Read())
+            {                
+                if (order.CustomerId == this.Id)
+                {
+                    order.AppendRelated();
+                    Orders.Add(order);
+                }                
+            }
+            return true;
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace IT_YARD.Models
@@ -7,7 +9,7 @@ namespace IT_YARD.Models
     /// Base mosels class
     /// </summary>
     [DataContract]
-    class EntityBase
+    abstract class EntityBase
     {
         [DataMember]
         public Guid Id{ get; set; }
@@ -23,7 +25,9 @@ namespace IT_YARD.Models
         /// Validate entity
         /// </summary>
         /// <returns>true if validation success</returns>
-        public virtual bool Validate()
+        public abstract bool Validate();
+
+        public virtual bool AppendRelated()
         {
             return true;
         }

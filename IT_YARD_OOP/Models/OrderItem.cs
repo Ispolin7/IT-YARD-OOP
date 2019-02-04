@@ -1,5 +1,7 @@
 ﻿using System;
+using IT_YARD.Common;
 using System.Reflection;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 
@@ -8,7 +10,6 @@ namespace IT_YARD.Models
     [DataContract]
     class OrderItem : EntityBase
     {
-        public static string ClassName = MethodBase.GetCurrentMethod().DeclaringType.ToString();
         /// <summary>
         /// OrderItem properties
         /// </summary>
@@ -21,6 +22,9 @@ namespace IT_YARD.Models
         [DataMember]
         public double PurchasePrice { get; set; }
 
+        public List<Product> Products { get; set; }
+        public static JsonSerializer<Product> relatedProducts = new JsonSerializer<Product>();
+
         /// <summary>
         /// OrderItem constructor
         /// </summary>
@@ -32,7 +36,8 @@ namespace IT_YARD.Models
             this.ProductId = product.Id;
             this.OrderId = orderId;
             this.Quantity = quantity;
-            this.PurchasePrice = quantity * product.Price;                          
+            this.PurchasePrice = quantity * product.Price;
+            this.Products = new List<Product>();
         }
 
         /// <summary>
@@ -50,6 +55,27 @@ namespace IT_YARD.Models
         public override bool Validate()
         {
             return (this.PurchasePrice > 0);
+        }
+
+        /// <summary>
+        /// Get related products list
+        /// </summary>
+        /// <returns>update Products property</returns>
+        public override bool AppendRelated()
+        {
+            if (this.Products == null || Products.Count > 0)
+            {
+                this.Products = new List<Product>();
+            }
+
+            foreach (Product product in relatedProducts.Read())
+            {
+                if(product.Id == this.ProductId)
+                {
+                    Products.Add(product);
+                }
+            }
+            return true;
         }
     }
 
