@@ -81,7 +81,7 @@ namespace IT_YARD.Models
         /// <summary>
         /// Helper for serialize/deserialize
         /// </summary>
-        public static JsonSerializer<Order> relatedOrders = new JsonSerializer<Order>();
+        //public static JsonSerializer<Order> relatedOrders = new JsonSerializer<Order>();
 
         /// <summary>
         /// Customer constructor
@@ -145,7 +145,7 @@ namespace IT_YARD.Models
         {
 
             this.Orders = new List<Order>();
-            foreach (Order order in relatedOrders.Read())
+            foreach (Order order in CheatingDB.ReadDB<Order>())
             {                
                 if (order.CustomerId == this.Id)
                 {

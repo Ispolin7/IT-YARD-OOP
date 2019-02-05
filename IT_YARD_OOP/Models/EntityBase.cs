@@ -9,7 +9,7 @@ namespace IT_YARD.Models
     /// Base mosels class
     /// </summary>
     [DataContract]
-    abstract class EntityBase
+    public abstract class EntityBase
     {
         [DataMember]
         public Guid Id{ get; set; }

@@ -24,7 +24,7 @@ namespace IT_YARD.Models
         public DateTime OrderDate { get; set; }
 
         public List<OrderItem> Items { get; set; }
-        public static JsonSerializer<OrderItem> relatedItems = new JsonSerializer<OrderItem>();
+        //public static JsonSerializer<OrderItem> relatedItems = new JsonSerializer<OrderItem>();
 
         /// <summary>
         /// Order constructor
@@ -71,18 +71,14 @@ namespace IT_YARD.Models
             {
                 this.Items = new List<OrderItem>();
             }
-            //relatedItems.Read();
-            //Items.Clear();            
-            foreach (OrderItem item in relatedItems.Read())
-            {
-                //foreach(Guid itemId in OrderItemsId)
-                //{
-                    if (item.OrderId == this.Id)
-                    {
-                        item.AppendRelated();
-                        Items.Add(item);
-                    }
-                //}                
+                     
+            foreach (OrderItem item in CheatingDB.ReadDB<OrderItem>())
+            {                
+                if (item.OrderId == this.Id)
+                {
+                    item.AppendRelated();
+                    Items.Add(item);
+                }                               
             }
             return true;
         }

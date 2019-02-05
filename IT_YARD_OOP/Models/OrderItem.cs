@@ -23,7 +23,7 @@ namespace IT_YARD.Models
         public double PurchasePrice { get; set; }
 
         public List<Product> Products { get; set; }
-        public static JsonSerializer<Product> relatedProducts = new JsonSerializer<Product>();
+        //public static JsonSerializer<Product> relatedProducts = new JsonSerializer<Product>();
 
         /// <summary>
         /// OrderItem constructor
@@ -68,7 +68,8 @@ namespace IT_YARD.Models
                 this.Products = new List<Product>();
             }
 
-            foreach (Product product in relatedProducts.Read())
+            //foreach (Product product in relatedProducts.Read())
+            foreach (Product product in CheatingDB.ReadDB<Product>())
             {
                 if(product.Id == this.ProductId)
                 {
