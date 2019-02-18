@@ -7,23 +7,19 @@ using System.Runtime.Serialization;
 
 namespace IT_YARD.Models
 {
-    [DataContract]
-    class OrderItem : EntityBase
+    public class OrderItem : EntityBase
     {
+        
         /// <summary>
         /// OrderItem properties
         /// </summary>
-        [DataMember]
         public Guid ProductId { get; set; }
-        [DataMember]
         public Guid OrderId { get; set; }
-        [DataMember]
         public int Quantity { get; set; }
-        [DataMember]
         public double PurchasePrice { get; set; }
+        public int Color { get; set; }
 
-        public List<Product> Products { get; set; }
-        //public static JsonSerializer<Product> relatedProducts = new JsonSerializer<Product>();
+        public IEnumerable<Product> Products { get; set; }
 
         /// <summary>
         /// OrderItem constructor
@@ -31,14 +27,15 @@ namespace IT_YARD.Models
         /// <param name="id"></param>
         /// <param name="product"></param>
         /// <param name="quantity"></param>
-        public OrderItem(Product product, int quantity, Guid orderId) : base() 
+        public OrderItem(Product product, int quantity, Guid orderId, int color) : base() 
         {             
             this.ProductId = product.Id;
             this.OrderId = orderId;
             this.Quantity = quantity;
             this.PurchasePrice = quantity * product.Price;
-            this.Products = new List<Product>();
+            this.Color = color;
         }
+        public OrderItem() { }
 
         /// <summary>
         /// Show OrderItem information
@@ -54,29 +51,7 @@ namespace IT_YARD.Models
         /// <returns>true if everything is correct</returns>
         public override bool Validate()
         {
-            return (this.PurchasePrice > 0);
-        }
-
-        /// <summary>
-        /// Get related products list
-        /// </summary>
-        /// <returns>update Products property</returns>
-        public override bool AppendRelated()
-        {
-            if (this.Products == null || Products.Count > 0)
-            {
-                this.Products = new List<Product>();
-            }
-
-            //foreach (Product product in relatedProducts.Read())
-            foreach (Product product in CheatingDB.ReadDB<Product>())
-            {
-                if(product.Id == this.ProductId)
-                {
-                    Products.Add(product);
-                }
-            }
-            return true;
+            return (this.PurchasePrice > 0 && Enum.IsDefined(typeof(Colors), this.Color));
         }
     }
 

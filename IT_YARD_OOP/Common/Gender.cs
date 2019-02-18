@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace IT_YARD.Models
+namespace IT_YARD.Common
 {
-    public interface IEntity
+    public enum GenderEnum
     {
+        Male,
+        Female
     }
 }

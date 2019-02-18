@@ -7,15 +7,12 @@ namespace IT_YARD.Models
     /// <summary>
     /// Users model
     /// </summary>
-    [DataContract]
-    class User : EntityBase
+    public class User : EntityBase
     {
         /// <summary>
         /// Class properties
         /// </summary>
-        [DataMember]
         public string Username { get; set; }
-        [DataMember]
         public string Password { get; set; }
 
         /// <summary>

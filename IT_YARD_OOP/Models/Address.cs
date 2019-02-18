@@ -8,25 +8,16 @@ namespace IT_YARD.Models
     /// <summary>
     /// Delivery address model
     /// </summary>
-    [DataContract]
-    class Address : EntityBase
+    public class Address : EntityBase
     {
         /// <summary>
         /// Class properties
         /// </summary>
-        [DataMember]
-        public int AddressType { get; set; }
-        [DataMember]
         public string StreetLine1 { get; set; }
-        [DataMember]
         public string StreetLine2 { get; set; }
-        [DataMember]
         public string City { get; set; }
-        [DataMember]
         public string State { get; set; }
-        [DataMember]
         public string PostalCode { get; set; }
-        [DataMember]
         public string Country { get; set; }
 
         /// <summary>
@@ -39,9 +30,8 @@ namespace IT_YARD.Models
         /// <param name="state"></param>
         /// <param name="code"></param>
         /// <param name="country"></param>
-        public Address(int type, string street1, string street2, string city, string state, string code, string country) : base()
+        public Address(string street1, string street2, string city, string state, string code, string country) : base()
         {
-            this.AddressType = type;
             this.StreetLine1 = street1;
             this.StreetLine2 = street2;
             this.City = city;

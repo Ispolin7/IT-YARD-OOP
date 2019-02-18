@@ -6,14 +6,10 @@ namespace IT_YARD.Models
     /// <summary>
     /// Product Model
     /// </summary>
-    [DataContract]
-    class Product : EntityBase
+    public class Product : EntityBase
     {
-        [DataMember]
         public string Name { get; set; }
-        [DataMember]
         public string Description { get; set; }
-        [DataMember]
         public double Price { get; set; }
 
         /// <summary>
@@ -28,6 +24,7 @@ namespace IT_YARD.Models
             this.Description = description;
             this.Price = price;
         }
+        public Product() { }
 
         /// <summary>
         /// Show entity information

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace IT_YARD.Repositories
 {
-    interface IRepository<T>
+    public interface IRepository<T>
     {
         /// <summary>
         /// Get all entitys
@@ -38,6 +38,9 @@ namespace IT_YARD.Repositories
         /// <param name="id"></param>
         /// <param name="item"></param>
         /// <returns>true if success</returns>
-        bool Update(T item);        
+        bool Update(T item);
+
+        bool InRepository(Guid id);
+
     }
 }

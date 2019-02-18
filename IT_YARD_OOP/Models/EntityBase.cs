@@ -6,13 +6,12 @@ using System.Runtime.Serialization;
 namespace IT_YARD.Models
 {
     /// <summary>
-    /// Base mosels class
+    /// Base models class
     /// </summary>
-    [DataContract]
     public abstract class EntityBase
     {
-        [DataMember]
         public Guid Id{ get; set; }
+        public bool IsDeleted{ get; set; }
         /// <summary>
         /// Show entity information
         /// </summary>
@@ -27,10 +26,14 @@ namespace IT_YARD.Models
         /// <returns>true if validation success</returns>
         public abstract bool Validate();
 
-        public virtual bool AppendRelated()
-        {
-            return true;
-        }
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        ///// <returns></returns>
+        //public virtual bool AppendRelated()
+        //{
+        //    return true;
+        //}
 
         /// <summary>
         /// Base constructor
@@ -38,6 +41,7 @@ namespace IT_YARD.Models
         public EntityBase()
         {
             this.Id = Guid.NewGuid();
+            this.IsDeleted = false;
         }
     }
 }

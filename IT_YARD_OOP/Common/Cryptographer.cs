@@ -16,8 +16,8 @@ namespace IT_YARD.Common
         /// <summary>
         /// Class fields
         /// </summary>
-        static byte[] key;
-        static byte[] iv;
+        static byte[] Key { get; }
+        static byte[] Iv { get; }
 
         /// <summary>
         /// Cryptographer static constructor
@@ -28,8 +28,8 @@ namespace IT_YARD.Common
             {
                 myRijndael.GenerateKey();
                 myRijndael.GenerateIV();
-                key = myRijndael.Key;
-                iv = myRijndael.IV;
+                Key = myRijndael.Key;
+                Iv = myRijndael.IV;
             }
         }
 
@@ -43,8 +43,8 @@ namespace IT_YARD.Common
             byte[] encrypted;
             using (RijndaelManaged rijAlg = new RijndaelManaged())
             {
-                rijAlg.Key = key;
-                rijAlg.IV = iv;
+                rijAlg.Key = Key;
+                rijAlg.IV = Iv;
                 ICryptoTransform encryptor = rijAlg.CreateEncryptor(rijAlg.Key, rijAlg.IV);
                 using (MemoryStream msEncrypt = new MemoryStream())
                 {
@@ -72,8 +72,8 @@ namespace IT_YARD.Common
             string plaintext = null;
             using (RijndaelManaged rijAlg = new RijndaelManaged())
             {
-                rijAlg.Key = key;
-                rijAlg.IV = iv;
+                rijAlg.Key = Key;
+                rijAlg.IV = Iv;
                 ICryptoTransform decryptor = rijAlg.CreateDecryptor(rijAlg.Key, rijAlg.IV);
                 using (MemoryStream msDecrypt = new MemoryStream(cipherText))
                 {

@@ -5,62 +5,23 @@ using System.Runtime.Serialization;
 
 namespace IT_YARD.Models
 {
-    [DataContract]
-    class Customer : EntityBase
+    public class Customer : EntityBase
     {
-        /// <summary>
-        /// Customer Types List
-        /// </summary>
-        public enum CustomersTypes
-        {
-            retail,
-            wholesale
-        }
-
         /// <summary>
         /// Customer properties
         /// </summary>
-        [DataMember]
-        public string Name { get; set; }
-        [DataMember]
+        public string FirstName { get; set; }
         public string LastName { get; set; }
-        [DataMember]
-        public string EmailAddress { get; set; }
-        [DataMember]
-        public int UserId { get; set; }
-        [DataMember]
-        public int CustomerType { get; set; }
-        // TODO Stack!
-        //{ 
-        //    get
-        //    {
-        //        return CustomerType;
-        //    }
-        //    set
-        //    {
-        //        if (Enum.IsDefined(typeof(CustomersTypes), value))
-        //        {
-        //            Console.WriteLine("Debug");
-        //            CustomerType = value;
-        //        }
-        //        // default type
-        //        else
-        //        {
-        //            CustomerType = 0;
-        //        }
-        //    }
-        //}
+        public string Email { get; set; }
+        public int Age { get; set; }
+        public int Gender { get; set; }
+       
 
         /// <summary>
         /// Customer address list
         /// </summary>
-        [DataMember]
         public List<Guid> AddressList = new List<Guid>();
 
-        /// <summary>
-        /// Я хз что это)))) !!!!!!!!!!!!!!
-        /// </summary>
-        public static int InstanceCount { get; set; }
 
         /// <summary>
         /// Virtual fields
@@ -69,19 +30,14 @@ namespace IT_YARD.Models
         {
             get
             {
-                return this.Name + " " + this.LastName;
+                return this.FirstName + " " + this.LastName;
             }
         }
 
         /// <summary>
         /// list for related products
         /// </summary>
-        public List<Order> Orders { get; set;}
-
-        /// <summary>
-        /// Helper for serialize/deserialize
-        /// </summary>
-        //public static JsonSerializer<Order> relatedOrders = new JsonSerializer<Order>();
+        public IEnumerable<Order> Orders { get; set;}
 
         /// <summary>
         /// Customer constructor
@@ -89,24 +45,22 @@ namespace IT_YARD.Models
         /// <param name="name"></param>
         /// <param name="lastName"></param>
         /// <param name="email"></param>
-        /// <param name="type"></param>
-        /// <param name="id"></param>
-        public Customer(string name, string lastName, string email, int type, int id) : base()
+        public Customer(string name, string lastName, string email, int gender) : base()
         {
-            this.Name = name;
+            this.FirstName = name;
             this.LastName = lastName;
-            this.EmailAddress = email;
-            this.CustomerType = type;
-            this.UserId = id;
-            //this.Orders = new List<Order>();
+            this.Email = email;
+            this.Gender = gender;
         }
+
+        public Customer() { }
 
         /// <summary>
         /// Show customer information
         /// </summary>
         public new void DisplayEntityInfo()
         {
-            Console.WriteLine($"Full name - {this.FullName},  type - {/*(CustomersTypes)*/this.CustomerType}");
+            Console.WriteLine($"Full name - {this.FullName}");
         }
 
         /// <summary>
@@ -116,9 +70,10 @@ namespace IT_YARD.Models
         public override bool Validate()
         {
             return !(
-                string.IsNullOrWhiteSpace(Name) ||
-                string.IsNullOrWhiteSpace(LastName) ||
-                string.IsNullOrWhiteSpace(EmailAddress)
+                string.IsNullOrWhiteSpace(this.FirstName) ||
+                string.IsNullOrWhiteSpace(this.LastName) ||
+                string.IsNullOrWhiteSpace(this.Email) ||
+                !Enum.IsDefined(typeof(GenderEnum), this.Gender)
                 );
         }
 
@@ -135,25 +90,6 @@ namespace IT_YARD.Models
                 return true;
             }
             return false;           
-        }
-
-        /// <summary>
-        /// Get related products list
-        /// </summary>
-        /// <returns>update Products property</returns>
-        public override bool AppendRelated()
-        {
-
-            this.Orders = new List<Order>();
-            foreach (Order order in CheatingDB.ReadDB<Order>())
-            {                
-                if (order.CustomerId == this.Id)
-                {
-                    order.AppendRelated();
-                    Orders.Add(order);
-                }                
-            }
-            return true;
         }
     }
 }

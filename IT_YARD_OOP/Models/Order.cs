@@ -8,23 +8,16 @@ namespace IT_YARD.Models
     /// <summary>
     /// Product order
     /// </summary>
-    [DataContract]
-    class Order : EntityBase
+    public class Order : EntityBase
     {
         /// <summary>
         /// Class properties
         /// </summary>
-        [DataMember]
         public Guid CustomerId { get; set; }
-        [DataMember]
         public Address ShippingAddress { get; set; }
-        //[DataMember]
-        //public List<Guid> OrderItemsId { get; set; }
-        [DataMember]
         public DateTime OrderDate { get; set; }
 
-        public List<OrderItem> Items { get; set; }
-        //public static JsonSerializer<OrderItem> relatedItems = new JsonSerializer<OrderItem>();
+        //public IEnumerable<OrderItem> Items { get; set; }
 
         /// <summary>
         /// Order constructor
@@ -37,8 +30,8 @@ namespace IT_YARD.Models
             this.CustomerId = customerId;
             this.OrderDate = DateTime.UtcNow;
             this.ShippingAddress = address;
-            this.Items = new List<OrderItem>();
         }
+        public Order() { }
 
         /// <summary>
         /// Display order information
@@ -59,28 +52,6 @@ namespace IT_YARD.Models
         public override bool Validate()
         {
             return ShippingAddress.Validate();
-        }
-
-        /// <summary>
-        /// Get related products list
-        /// </summary>
-        /// <returns>update Products property</returns>
-        public override bool AppendRelated()
-        {
-            if (this.Items == null || Items.Count > 0)
-            {
-                this.Items = new List<OrderItem>();
-            }
-                     
-            foreach (OrderItem item in CheatingDB.ReadDB<OrderItem>())
-            {                
-                if (item.OrderId == this.Id)
-                {
-                    item.AppendRelated();
-                    Items.Add(item);
-                }                               
-            }
-            return true;
         }
     }
 }
