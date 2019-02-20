@@ -18,8 +18,7 @@ namespace IT_YARD.Services
         public OrderService(
             IRepository<Order> orders,
             IRepository<Customer> customers,
-            IRepository<OrderItem> items
-            )
+            IRepository<OrderItem> items)
         {
             this.Customers = customers;
             this.Orders = orders;

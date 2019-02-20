@@ -9,17 +9,16 @@ using System.Text;
 
 namespace IT_YARD.Services
 {
-    public class OrederItemService : IOrederItemService
+    public class OrderItemService : IOrederItemService
     {
         private IRepository<OrderItem> Items { get; }
         private IRepository<Product> Products { get; }
         private IRepository<Order> Orders { get; }
 
-        public OrederItemService(
+        public OrderItemService(
             IRepository<OrderItem> items,
             IRepository<Product> products,
-            IRepository<Order> orders
-            )
+            IRepository<Order> orders)
         {
             this.Items = items;
             this.Products = products;
@@ -28,7 +27,7 @@ namespace IT_YARD.Services
 
         public bool AddNewItem(OrderItem item)
         {
-            if (item.Validate() && Products.InRepository(item.ProductId) && Orders.InRepository(item.ProductId))
+            if (item.Validate() && Products.InRepository(item.ProductId) && Orders.InRepository(item.OrderId))
             {
                 return Items.Insert(item);
             }
@@ -40,7 +39,7 @@ namespace IT_YARD.Services
             return this.Items.All().Where(i => i.IsDeleted == false);
         }
 
-        public IEnumerable<Models.OrderItem> GetAllItemsWithProduct()
+        public IEnumerable<Models.OrderItem> GetAllItemsWithRelations()
         {
             var itemCollection = this.GetAllItems();
             return itemCollection.Select(i => new Models.OrderItem(
@@ -59,7 +58,7 @@ namespace IT_YARD.Services
             throw new KeyNotFoundException("OrderItem not found");
         }
 
-        public Models.OrderItem GetItemWithProduct(Guid id)
+        public Models.OrderItem GetItemWithRelations(Guid id)
         {
             var item = this.GetItem(id);
             var product = this.Products.All().Where(p => (p.Id == item.ProductId) && (p.IsDeleted == false)).First();
@@ -81,11 +80,10 @@ namespace IT_YARD.Services
         public bool Update(OrderItem item)
         {
             if (
-                item.Validate() && 
-                Products.InRepository(item.ProductId) && 
-                Orders.InRepository(item.ProductId) &&
-                Items.InRepository(item.Id)
-                )
+                item.Validate() &&
+                Products.InRepository(item.ProductId) &&
+                Orders.InRepository(item.OrderId) &&
+                Items.InRepository(item.Id))
             {
                 return Items.Update(item);
             }

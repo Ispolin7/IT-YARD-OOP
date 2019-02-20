@@ -51,7 +51,8 @@ namespace IT_YARD.Models
         /// <returns>true if everything is correct</returns>
         public override bool Validate()
         {
-            return ShippingAddress.Validate();
+            return true;
+            //return ShippingAddress.Validate();
         }
     }
 }

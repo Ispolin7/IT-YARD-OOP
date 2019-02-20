@@ -19,7 +19,7 @@ namespace UnitTests.Repositories
         [TestInitialize]
         public void TestInitialize()
         {
-            TestRepository = new StubRepository().ÑustomersRepositoryInitialization();
+            TestRepository = new CustomerStubRepository().Customers;
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace UnitTests.Repositories
         /// </summary>
         [TestMethod]
         public void Update_UpdateEntity_ExpectedSuccess()
-        {           
+        {
             var customer = new Customer()
             {
                 Id = Guid.Parse("edb050f5-ca3b-4381-a4ba-7b57ebeb108f"),
